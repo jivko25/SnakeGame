@@ -1,4 +1,5 @@
 import java.awt.Container;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -6,7 +7,7 @@ public class SnakeMain {
 	public static void main(String [] args) throws InterruptedException {
 		Scanner sc = new Scanner(System.in);
 		Borders px = new Borders('#',2,2);
-		String turn = sc.nextLine();
+		String turn;
 		while(!px.isGameOver()) {
 		turn = sc.nextLine();
 		px.GameControlers(turn);
@@ -34,10 +35,20 @@ public class SnakeMain {
 					}
 				}
 			}
+			RandomTarget();
 			Print();
 		}
 		
+		public void RandomTarget() {
+			Random rd = new Random();
+			int rdX = rd.nextInt(7)+2;
+			int rdY = rd.nextInt(7)+2;
+			this.px[rdX][rdY] = '@';
+		}
 		public void TurnRight() throws InterruptedException {
+			if(px[this.snakeX+1][this.snakeY] == '@') {
+				RandomTarget();
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX + 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -45,6 +56,9 @@ public class SnakeMain {
 		}
 		
 		public void TurnLeft() throws InterruptedException {
+			if(px[this.snakeX-1][this.snakeY] == '@') {
+				RandomTarget();
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX - 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -52,6 +66,9 @@ public class SnakeMain {
 		}
 		
 		public void TurnUp() throws InterruptedException {
+			if(px[this.snakeX][this.snakeY-1] == '@') {
+				RandomTarget();
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY - 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -59,6 +76,9 @@ public class SnakeMain {
 		}
 		
 		public void TurnDown() throws InterruptedException {
+			if(px[this.snakeX][this.snakeY+1] == '@') {
+				RandomTarget();
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY + 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -131,6 +151,9 @@ public class SnakeMain {
 				break;	
 			default:
 				break;
+			}
+			if(px[this.snakeX][this.snakeY] == '@') {
+				RandomTarget();
 			}
 		}
 		
