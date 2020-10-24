@@ -109,6 +109,8 @@ public class SnakeMain {
 		public void RiseSnake() {
 			for(int i = this.snakeRiseX.size();i>this.snakeLenght;i--) {
 				this.px[this.snakeRiseX.get(i-1)][this.snakeRiseY.get(i-1)] = ' ';
+				snakeRiseX.remove(i-1);
+				snakeRiseY.remove(i-1);
 			}
 			for(int i = 0;i<this.snakeLenght;i++) {
 				this.px[this.snakeRiseX.get(i)][this.snakeRiseY.get(i)] = 'o';
