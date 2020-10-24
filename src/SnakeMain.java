@@ -10,10 +10,11 @@ public class SnakeMain {
 		Scanner sc = new Scanner(System.in);
 		Borders px = new Borders('#',2,2);
 		String turn;
-		while(!px.isGameOver()) {
+		while(!px.isGameOver() && px.GameOver == false) {
 		turn = sc.nextLine();
 		px.GameControlers(turn);
 		}
+		System.out.printf("Game Over\nYour points are: %d",(px.snakeLenght-1)*100);
 		}
 	}
 	
@@ -24,6 +25,7 @@ public class SnakeMain {
 		int snakeLenght = 1;
 		ArrayList<Integer> snakeRiseX = new ArrayList<Integer>();
 		ArrayList<Integer> snakeRiseY = new ArrayList<Integer>();
+		boolean GameOver = false;
 		public Borders(char symbol, int snakeX,int snakeY) {
 			this.snakeX = snakeX;
 			this.snakeY = snakeY;
@@ -59,6 +61,9 @@ public class SnakeMain {
 				RandomTarget();
 				this.snakeLenght++;
 			}
+			if(px[this.snakeX+1][this.snakeY] == 'o') {
+				this.GameOver = true;
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX + 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -72,6 +77,9 @@ public class SnakeMain {
 			if(px[this.snakeX-1][this.snakeY] == '@') {
 				RandomTarget();
 				this.snakeLenght++;
+			}
+			if(px[this.snakeX-1][this.snakeY] == 'o') {
+				this.GameOver = true;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX - 1;
@@ -87,6 +95,9 @@ public class SnakeMain {
 				RandomTarget();
 				this.snakeLenght++;
 			}
+			if(px[this.snakeX][this.snakeY-1] == 'o') {
+				this.GameOver = true;
+			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY - 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
@@ -100,6 +111,9 @@ public class SnakeMain {
 			if(px[this.snakeX][this.snakeY+1] == '@') {
 				RandomTarget();
 				this.snakeLenght++;
+			}
+			if(px[this.snakeX][this.snakeY + 1] == 'o') {
+				this.GameOver = true;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY + 1;
@@ -128,9 +142,6 @@ public class SnakeMain {
 				}
 				System.out.println();
 			}
-		}
-		public boolean isNextBlockSnakePart() {
-			return false;
 		}
 		public boolean isGameOver() {
 			if(this.snakeX == 0 || this.snakeX == this.px.length-1 || this.snakeY == 0 || this.snakeY == this.px.length-1 ) {
