@@ -48,6 +48,10 @@ public class SnakeMain {
 			Random rd = new Random();
 			int rdX = rd.nextInt(7)+2;
 			int rdY = rd.nextInt(7)+2;
+			while(this.px[rdX][rdY] == 'o') {
+				rdX = rd.nextInt(7)+2;
+				rdY = rd.nextInt(7)+2;
+			}
 			this.px[rdX][rdY] = '@';
 		}
 		public void TurnRight() throws InterruptedException {
@@ -88,7 +92,7 @@ public class SnakeMain {
 			this.px[this.snakeX][this.snakeY] = 'o';
 			this.snakeRiseX.add(0,this.snakeX);
 			this.snakeRiseY.add(0,this.snakeY);
-//			RiseSnake();
+			RiseSnake();
 			Print();
 		}
 		
@@ -107,10 +111,10 @@ public class SnakeMain {
 		}
 		
 		public void RiseSnake() {
-			for(int i = this.snakeRiseX.size();i>this.snakeLenght;i--) {
-				this.px[this.snakeRiseX.get(i-1)][this.snakeRiseY.get(i-1)] = ' ';
-				snakeRiseX.remove(i-1);
-				snakeRiseY.remove(i-1);
+			for(int i = this.snakeRiseX.size()-1;i>this.snakeLenght;i--) {
+				this.px[this.snakeRiseX.get(i)][this.snakeRiseY.get(i)] = ' ';
+				snakeRiseX.remove(i);
+				snakeRiseY.remove(i);
 			}
 			for(int i = 0;i<this.snakeLenght;i++) {
 				this.px[this.snakeRiseX.get(i)][this.snakeRiseY.get(i)] = 'o';
@@ -124,6 +128,9 @@ public class SnakeMain {
 				}
 				System.out.println();
 			}
+		}
+		public boolean isNextBlockSnakePart() {
+			return false;
 		}
 		public boolean isGameOver() {
 			if(this.snakeX == 0 || this.snakeX == this.px.length-1 || this.snakeY == 0 || this.snakeY == this.px.length-1 ) {
