@@ -1,4 +1,6 @@
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +21,9 @@ public class SnakeMain {
 		char [][] px = new char[10][10];
 		int snakeX;
 		int snakeY;
+		int snakeLenght = 1;
+		ArrayList<Integer> snakeRiseX = new ArrayList<Integer>();
+		ArrayList<Integer> snakeRiseY = new ArrayList<Integer>();
 		public Borders(char symbol, int snakeX,int snakeY) {
 			this.snakeX = snakeX;
 			this.snakeY = snakeY;
@@ -48,41 +53,66 @@ public class SnakeMain {
 		public void TurnRight() throws InterruptedException {
 			if(px[this.snakeX+1][this.snakeY] == '@') {
 				RandomTarget();
+				this.snakeLenght++;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX + 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
+			this.snakeRiseX.add(0,this.snakeX);
+			this.snakeRiseY.add(0,this.snakeY);
+			RiseSnake();
 			Print();
 		}
 		
 		public void TurnLeft() throws InterruptedException {
 			if(px[this.snakeX-1][this.snakeY] == '@') {
 				RandomTarget();
+				this.snakeLenght++;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeX = this.snakeX - 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
+			this.snakeRiseX.add(0,this.snakeX);
+			this.snakeRiseY.add(0,this.snakeY);
+			RiseSnake();
 			Print();
 		}
 		
 		public void TurnUp() throws InterruptedException {
 			if(px[this.snakeX][this.snakeY-1] == '@') {
 				RandomTarget();
+				this.snakeLenght++;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY - 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
+			this.snakeRiseX.add(0,this.snakeX);
+			this.snakeRiseY.add(0,this.snakeY);
+//			RiseSnake();
 			Print();
 		}
 		
 		public void TurnDown() throws InterruptedException {
 			if(px[this.snakeX][this.snakeY+1] == '@') {
 				RandomTarget();
+				this.snakeLenght++;
 			}
 			this.px[this.snakeX][this.snakeY] = ' ';
 			this.snakeY = this.snakeY + 1;
 			this.px[this.snakeX][this.snakeY] = 'o';
+			this.snakeRiseX.add(0,this.snakeX);
+			this.snakeRiseY.add(0,this.snakeY);
+			RiseSnake();
 			Print();
+		}
+		
+		public void RiseSnake() {
+			for(int i = this.snakeRiseX.size();i>this.snakeLenght;i--) {
+				this.px[this.snakeRiseX.get(i-1)][this.snakeRiseY.get(i-1)] = ' ';
+			}
+			for(int i = 0;i<this.snakeLenght;i++) {
+				this.px[this.snakeRiseX.get(i)][this.snakeRiseY.get(i)] = 'o';
+			}
 		}
 		
 		public void Print() {
