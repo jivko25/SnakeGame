@@ -157,7 +157,6 @@ public class SnakeMain {
 			boolean A = false;
 			boolean W = false;
 			boolean S = false;
-//			TimeUnit.SECONDS.sleep(1);
 			if(W == true) {
 				TurnUp();
 			}
